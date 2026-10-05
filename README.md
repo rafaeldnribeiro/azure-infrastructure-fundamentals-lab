@@ -6,14 +6,24 @@ This project demonstrates a structured, practical transition from traditional IT
 
 ---
 
+## Deployment Status
+
+The infrastructure in this repository has been implemented as Bicep Infrastructure as Code and successfully validated through local Bicep compilation and static checks.
+
+A live Azure deployment was not performed during the current lab run because no active Azure subscription was configured.
+
+No Azure resources or billing were created.
+
+---
+
 ## Overview
 
-The **Azure Infrastructure Fundamentals Lab** provisions an isolated, multi-tier cloud network topology inside Microsoft Azure using **Bicep** and the **Azure CLI**. 
+The **Azure Infrastructure Fundamentals Lab** defines an isolated, multi-tier cloud network topology inside Microsoft Azure using **Bicep** and the **Azure CLI**. 
 
 The design emphasizes foundational enterprise requirements:
 - **Logical Segregation**: Distinct Management and Workload subnets.
 - **Stateful Traffic Filtering**: Granular Network Security Groups (NSGs) with zero public ingress.
-- **Financial Guardrails**: Built with $0.00 base hourly infrastructure cost (no VMs, no public IPs, no chargeable gateways).
+- **Financial Guardrails**: Designed to avoid chargeable compute and gateway resources (no VMs, no public IPs, no chargeable gateways).
 - **Automated Validation**: Programmatic compliance and drift auditing via automated shell scripts.
 - **Disaster Recovery & Lifecycle**: Interactive, safe single-command teardown.
 
@@ -41,7 +51,7 @@ For complete architectural specifications, CIDR allocations, and routing mechani
 
 ---
 
-## Provisioned Cloud Resources
+## Infrastructure Defined in Bicep
 
 | Resource Name | Type | CIDR / Scope | Role & Security Boundary |
 | :--- | :--- | :--- | :--- |
@@ -62,7 +72,7 @@ The entire laboratory is codified declaratively in Bicep:
 - `bicep/network.bicep`: Encapsulates Virtual Network, subnets, and NSG rule configurations.
 - `bicep/main.bicepparam`: Parameter definitions for repeatable regional targeting.
 
-To validate syntax and compile to ARM template:
+Bicep templates compile successfully and deployment automation is ready for execution when an Azure subscription is available:
 ```bash
 az bicep build --file bicep/main.bicep
 ```
@@ -91,23 +101,23 @@ The script automatically executes:
 
 ---
 
-## Operational Validation
+## Static Validation & Operational Contract
 
-![Deployment & Validation](docs/screenshots/deployment-validation.png)
+![Bicep Static Validation](docs/screenshots/bicep-static-validation.png)
 
-Post-deployment verification is automated via `scripts/validate.sh`, which programmatically audits the deployed resources against architectural baselines:
+Post-deployment validation is codified in `scripts/validate.sh`, which programmatically audits environment compliance against architectural baselines.
 
-```bash
-./scripts/validate.sh rg-azure-infra-lab
+### Expected validation contract after a real deployment:
 ```
-
-### Verification Checklist:
-- `[PASS]` Resource Group existence and location (`brazilsouth`).
-- `[PASS]` Virtual Network address prefix matches `10.20.0.0/16`.
-- `[PASS]` Management subnet matches `10.20.1.0/24` and binds `nsg-management`.
-- `[PASS]` Workload subnet matches `10.20.2.0/24` and binds `nsg-workload`.
-- `[PASS]` Compliance tags (`project`, `environment`, `managedBy`, `purpose`).
-- `[PASS]` Zero chargeable compute or gateway resources.
+[PASS] Resource Group: 'rg-azure-infra-lab' exists (Location: brazilsouth)
+[PASS] Virtual Network: 'vnet-infra-lab' address space matches '10.20.0.0/16'
+[PASS] Management Subnet: 'snet-management' prefix matches '10.20.1.0/24'
+[PASS] Management NSG Association: Attached to 'nsg-management'
+[PASS] Workload Subnet: 'snet-workload' prefix matches '10.20.2.0/24'
+[PASS] Workload NSG Association: Attached to 'nsg-workload'
+[PASS] Governance Tags: Standard project, environment, and managedBy tags present
+[PASS] Cost Control: Zero chargeable compute or gateway resources detected
+```
 
 ---
 
@@ -123,12 +133,13 @@ Comprehensive incident playbooks are documented under [docs/troubleshooting.md](
 
 ## Cloud Cost Control & Financial Governance
 
-This laboratory adheres to a strict zero-chargeable baseline:
-- No Virtual Machines (VMs)
-- No Public IP addresses
-- No VPN Gateways / NAT Gateways
-- No Application Gateways or Azure Firewalls
-- No Managed Databases
+This laboratory adheres to strict financial governance:
+- Designed to avoid chargeable compute and gateway resources.
+- No Virtual Machines (VMs).
+- No Public IP addresses.
+- No VPN Gateways / NAT Gateways.
+- No Application Gateways or Azure Firewalls.
+- No Managed Databases.
 
 Standard Azure Virtual Networks and Network Security Groups carry **$0.00 base cost**, ensuring zero ongoing expense during portfolio demonstration. See [Cost Control Documentation](docs/cost-control.md) for full pricing breakdown and audit commands.
 
@@ -142,7 +153,7 @@ This repository directly demonstrates hands-on competencies tested in the **Micr
 - **Governance & Compliance**: Resource Tagging, Lifecycle Boundaries.
 - **Modern Operations**: Infrastructure as Code (Bicep), Azure CLI scripting.
 
-See [AZ-900 Competency Mapping](docs/az900-mapping.md) for full syllabus cross-referencing.
+See [AZ-900 Competency Mapping](docs/az900-mapping.md) and [AZ-900 Readiness Matrix](docs/az900-readiness.md) for full syllabus cross-referencing.
 
 ---
 
