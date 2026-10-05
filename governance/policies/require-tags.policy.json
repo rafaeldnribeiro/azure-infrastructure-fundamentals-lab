@@ -1,0 +1,25 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "anyOf": [
+        {
+          "field": "tags['environment']",
+          "exists": "false"
+        },
+        {
+          "field": "tags['project']",
+          "exists": "false"
+        },
+        {
+          "field": "tags['owner']",
+          "exists": "false"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {}
+}
