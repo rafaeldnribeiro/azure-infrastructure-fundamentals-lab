@@ -1,0 +1,37 @@
+{
+  "rules": [
+    {
+      "enabled": true,
+      "name": "lifecycle-tiered-retention-policy",
+      "type": "Lifecycle",
+      "definition": {
+        "filters": {
+          "blobTypes": [
+            "blockBlob"
+          ],
+          "prefixMatch": [
+            "data-archive/"
+          ]
+        },
+        "actions": {
+          "baseBlob": {
+            "tierToCool": {
+              "daysAfterModificationGreaterThan": 30
+            },
+            "tierToArchive": {
+              "daysAfterModificationGreaterThan": 90
+            },
+            "delete": {
+              "daysAfterModificationGreaterThan": 365
+            }
+          },
+          "snapshot": {
+            "delete": {
+              "daysAfterCreationGreaterThan": 90
+            }
+          }
+        }
+      }
+    }
+  ]
+}
