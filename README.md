@@ -121,6 +121,21 @@ Post-deployment validation is codified in `scripts/validate.sh`, which programma
 
 ---
 
+## Task 011 — Compute, Storage & PowerShell
+
+| Area / Workload | Operational Scope & Validation Status | Evidence / Codebase Location |
+| :--- | :--- | :--- |
+| **Compute** | IaC / local validation (`az bicep build`) | `compute/bicep/*.bicep`, `compute/compute-decision-matrix.md` |
+| **Storage** | IaC / local validation (`az bicep build`, `jq`) | `storage/bicep/storage.bicep`, `storage/lifecycle-management.json` |
+| **PowerShell** | Local practical tooling (PowerShell 7.6.5 + Az 16.3.0) | `powershell/Test-AzureLabEnvironment.ps1`, `powershell/Get-AzureArchitecture.ps1` |
+
+> [!NOTE]
+> **Operational Status & Zero Cloud Cost Guarantee:**
+> No VM, container, storage account or other Azure resource was provisioned because no authenticated Azure subscription was available.
+> All templates, policies and scripts were developed and validated strictly in local testing environments to demonstrate architectural rigor and Tier 2 operational readiness.
+
+---
+
 ## Tier 2 (N2) Troubleshooting Runbooks
 
 Comprehensive incident playbooks are documented under [docs/troubleshooting.md](docs/troubleshooting.md):
