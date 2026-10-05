@@ -1,0 +1,18 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "not": {
+        "field": "location",
+        "in": [
+          "brazilsouth",
+          "eastus"
+        ]
+      }
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {}
+}
