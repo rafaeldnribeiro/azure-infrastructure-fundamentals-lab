@@ -1,0 +1,33 @@
+# Azure CLI local caches & profiles
+.azure/
+azure-cli/
+
+# Secrets, Keys, and Certificates
+*.pem
+*.key
+*.pfx
+*.cer
+*.crt
+*.id_rsa
+*.id_ed25519
+*.pub
+.env
+.env.*
+secrets/
+credentials
+credentials.json
+
+# Bicep and ARM artifacts
+*.json.tmp
+*.arm.json
+
+# Python & System temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+*.log
+.DS_Store
+Thumbs.db
